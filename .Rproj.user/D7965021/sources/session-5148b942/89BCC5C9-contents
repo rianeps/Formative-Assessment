@@ -24,3 +24,5 @@ diabetes <- diabetes %>%
 bmi <- bmi %>% drop_na(BMI_Obesity)
 diabetes <- diabetes %>% drop_na(Diabetes_Prev)
 
+print('hello')
+
