@@ -1,0 +1,11 @@
+library(dplyr)
+library(ggplot2)
+library(readr)
+
+# Load datasets
+diabetes <- read_csv("data/diabetes.csv")
+bmi <- read_csv("data/bmi.csv")
+
+# Check structure
+View(diabetes)
+View(bmi)
