@@ -1,39 +1,27 @@
-# Formative Report
+# Formative Report: NCD-RisC Data Analysis
 
-Welcome to ProjectTemplate!
+**Author:** Nepoliyan Ria, Hamsini Manjunath, Sancha Baretto
+**Module:** Graduate Foundations of Statistics and Data Science
+**Submission Date:** 10 November 2025
 
-This file introduces you to ProjectTemplate, but you should eventually replace
-the contents of this file with an introduction to your project. People who
-work with your data in the future will thank you for it, including your future
-self.
+## Project Overview
 
-ProjectTemplate is an R package that helps you organize your statistical
-analysis projects. Since you're reading this file, we'll assume that you've
-already called `create.project()` to set up this project and all of its
-contents.
+This project investigates global trends in diabetes and obesity prevalence using data from the NCD-RisC. The analysis follows two cycles of the CRISP-DM framework and uses the `ProjectTemplate` structure for reproducibility. The final report is an R Markdown document featuring interactive `plotly` visualizations.
 
-To load your new project, you'll first need to `setwd()` into the directory
-where this README file is located. Then you need to run the following two
-lines of R code:
+---
 
-	library('ProjectTemplate')
-	load.project()
+## Required R Packages
 
-After you enter the second line of code, you'll see a series of automated
-messages as ProjectTemplate goes about doing its work. This work involves:
-* Reading in the global configuration file contained in `config`.
-* Loading any R packages you listed in the configuration file.
-* Reading in any datasets stored in `data` or `cache`.
-* Preprocessing your data using the files in the `munge` directory.
+To run this analysis, you will need R and RStudio, along with the following R packages.
 
-Once that's done, you can execute any code you'd like. For every analysis
-you create, we'd recommend putting a separate file in the `src` directory.
-If the files start with the two lines mentioned above:
+* `ProjectTemplate`: For structuring the project and loading data.
+* `dplyr`: For all data manipulation.
+* `ggplot2`: For static plots.
+* `plotly`: For creating all interactive visualizations and maps.
+* `rprojroot`: Used by `knitr` in the Rmd file to find the project's root directory.
+* `knitr`: For knitting the R Markdown document.
 
-	library('ProjectTemplate')
-	load.project()
+You can install all required packages by running the following command in your R console:
 
-You'll have access to all of your data, already fully preprocessed, and
-all of the libraries you want to use.
-
-For more details about ProjectTemplate, see http://projecttemplate.net
+```r
+install.packages(c("ProjectTemplate", "dplyr", "ggplot2", "plotly", "rprojroot", "knitr"))
