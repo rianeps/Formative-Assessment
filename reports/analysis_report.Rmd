@@ -1,0 +1,293 @@
+---
+title: "NCD-RisC Data Analysis: Diabetes and Obesity Trends"
+author: "Nepoliyan Ria, Hamsini Manjunath, Sancha Baretto"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+# Load required libraries first
+library(ProjectTemplate)
+library(dplyr)
+library(ggplot2)
+library(plotly)
+
+# Set chunk options
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, 
+                      fig.width = 10, fig.height = 6)
+
+# Find and set the project root directory
+project_root <- rprojroot::find_rstudio_root_file()
+setwd(project_root)
+
+# Now load the project
+load.project(force.load = TRUE)
+
+# Source analysis functions
+source("src/analysis_functions.R")
+```
+
+# Executive Summary
+
+This report investigates trends in diabetes and obesity prevalence using NCD-RisC data, following two cycles of the CRISP-DM methodology. The first cycle explores temporal trends in selected countries, while the second cycle examines the relationship between obesity and diabetes prevalence. All visualizations are interactive - hover over data points for details!
+
+---
+
+# CRISP-DM Cycle 1: Temporal Trends Analysis
+
+## Business Understanding
+
+**Research Question:** How has diabetes prevalence changed over time in high-income countries, and are there differences between men and women?
+
+**Objectives:**
+
+- Identify temporal trends in diabetes prevalence
+- Compare trends across selected countries
+- Examine sex differences in diabetes prevalence
+
+## Data Understanding
+
+```{r data-overview}
+cat("Diabetes dataset dimensions:", dim(diabetes_clean), "\n")
+cat("BMI dataset dimensions:", dim(bmi_clean), "\n")
+cat("Year range (diabetes):", range(diabetes_clean$year, na.rm = TRUE), "\n")
+cat("Number of countries:", n_distinct(diabetes_clean$country), "\n")
+```
+
+The diabetes dataset contains `r nrow(diabetes_clean)` observations across `r n_distinct(diabetes_clean$country)` countries/regions, covering years `r min(diabetes_clean$year, na.rm = TRUE)` to `r max(diabetes_clean$year, na.rm = TRUE)`.
+
+## Data Preparation
+
+Data cleaning was performed in the munge script (`01-clean-data.R`):
+
+- Renamed columns for easier handling
+- Removed rows with missing key variables
+- Ensured year values are numeric
+- Filtered for relevant sex categories
+
+For this analysis, we focus on four high-income countries: United Kingdom, United States, Germany, and Japan.
+
+## Modeling / Analysis
+
+### Diabetes Trends Over Time
+
+```{r diabetes-trends, fig.cap="Diabetes prevalence trends in selected countries (Interactive)"}
+countries_of_interest <- c("United Kingdom", "United States of America", 
+                          "Germany", "Japan")
+
+plot_diabetes_trends(diabetes_clean, countries_of_interest)
+```
+
+**Key Observations:** Hover over the lines to see exact values. The graph shows increasing trends in diabetes prevalence across all four countries, with the United States showing the highest prevalence rates.
+
+### Sex Differences in Diabetes
+
+```{r sex-differences-uk, fig.cap="Sex differences in diabetes prevalence - UK (Interactive)"}
+plot_sex_differences(diabetes_clean, "United Kingdom")
+```
+
+In the United Kingdom, men consistently show higher diabetes prevalence than women throughout the time period. Click on legend items to show/hide specific sexes.
+
+## Evaluation
+
+```{r cycle1-summary}
+cycle1_summary <- lapply(countries_of_interest, function(country) {
+  summarize_country(combined_data, country, sex_filter = "Men")
+}) %>% bind_rows()
+
+knitr::kable(cycle1_summary, 
+             caption = "Summary statistics for selected countries (Men)")
+```
+
+**Key Findings:**
+
+- All four countries show increasing diabetes prevalence over time
+- The United States has the highest diabetes prevalence among countries analyzed
+- Men generally have higher diabetes rates than women
+- The rate of increase varies by country
+
+**Limitations:**
+
+- Analysis limited to four countries
+- Different years have different data availability
+- Does not account for demographic changes
+
+---
+
+# CRISP-DM Cycle 2: Obesity-Diabetes Relationship
+
+## Business Understanding
+
+**Research Question:** Is there a relationship between obesity prevalence and diabetes prevalence at the country level?
+
+**Objectives:**
+
+- Examine correlation between obesity and diabetes
+- Identify countries with high rates of both conditions
+- Explore whether the relationship has changed over time
+
+**Hypothesis:** Countries with higher obesity rates will have higher diabetes rates, as obesity is a known risk factor for Type 2 diabetes.
+
+## Data Understanding
+
+For this cycle, we use the combined dataset that includes both diabetes and obesity prevalence:
+
+- `r nrow(combined_data)` observations after joining datasets
+- `r n_distinct(combined_data$country)` countries with data for both variables
+- Year range: `r min(combined_data$year, na.rm = TRUE)` to `r max(combined_data$year, na.rm = TRUE)`
+
+## Data Preparation
+
+The combined dataset was created in the munge script by inner joining diabetes and BMI datasets on country, ISO code, sex, and year. Only observations where both diabetes and obesity data are available were retained.
+
+## Modeling / Analysis
+
+### Overall Correlation
+
+```{r correlation-plot, fig.cap="Relationship between obesity and diabetes (Interactive)"}
+latest_year <- max(combined_data$year, na.rm = TRUE)
+plot_obesity_diabetes_correlation(combined_data, year_filter = latest_year, sex_filter = "Men")
+```
+
+```{r calculate-correlation}
+cor_results <- calculate_correlation(combined_data, year_filter = latest_year, sex_filter = "Men")
+```
+
+For the year `r latest_year`, the correlation between obesity and diabetes prevalence is **`r round(cor_results$correlation, 3)`** (p < 0.001, n = `r cor_results$n_observations`), indicating a strong positive relationship. Hover over points to see country names!
+
+### Countries with Highest Prevalence
+
+```{r top-diabetes, fig.cap="Top 10 countries by diabetes prevalence (Interactive)"}
+plot_top_countries(combined_data, year_filter = latest_year, 
+                  n = 10, variable = "diabetes", sex_filter = "Men")
+```
+
+```{r top-obesity, fig.cap="Top 10 countries by obesity prevalence (Interactive)"}
+plot_top_countries(combined_data, year_filter = latest_year, 
+                  n = 10, variable = "obesity", sex_filter = "Men")
+```
+
+### Obesity Trends in Selected Countries
+
+```{r obesity-trends, fig.cap="Obesity prevalence trends (Interactive)"}
+plot_obesity_trends(bmi_clean, countries_of_interest)
+```
+
+Both diabetes and obesity show increasing trends, with obesity rates rising more steeply in some countries.
+
+## Evaluation
+
+**Key Findings:**
+
+- Strong positive correlation (r = `r round(cor_results$correlation, 2)`) between obesity and diabetes prevalence
+- Countries with high obesity rates tend to have high diabetes rates
+- Both conditions are increasing over time in most countries
+- The relationship supports the hypothesis that obesity is associated with diabetes risk
+
+**Implications:**
+
+- Public health interventions targeting obesity may help reduce diabetes burden
+- Countries with rising obesity rates should prepare for increased diabetes prevalence
+- Prevention strategies should address both conditions simultaneously
+
+**Limitations:**
+
+- Ecological analysis (country-level) cannot establish individual-level causation
+- Other factors (diet, physical activity, healthcare access) not accounted for
+- Time lag between obesity and diabetes development not considered
+- Data availability varies by country and year
+
+---
+
+# Interactive Global Visualizations
+
+## Global Diabetes Prevalence Map
+
+```{r diabetes-world-map, fig.height=7}
+plot_diabetes_world_map(diabetes_clean, year_filter = latest_year, sex_filter = "Men")
+```
+
+**Instructions:** Hover over countries to see exact prevalence rates. Zoom in/out and drag to explore different regions.
+
+## Global Treatment Rates Map
+
+```{r treatment-world-map, fig.height=7}
+plot_treatment_world_map(diabetes_clean, year_filter = latest_year, sex_filter = "Men")
+```
+
+**Key Observations:** Treatment rates vary significantly between countries. Some countries with high diabetes prevalence have low treatment rates, indicating a treatment gap.
+
+## Treatment vs Prevalence Scatter Plot
+
+```{r treatment-scatter, fig.height=6}
+plot_treatment_vs_prevalence(diabetes_clean, year_filter = latest_year, sex_filter = "Men")
+```
+
+**Interpretation:** Each point represents a country. Countries in the upper right have both high prevalence and high treatment rates. Countries in the lower right have high prevalence but low treatment coverage.
+
+## Global Obesity Prevalence Map
+
+```{r obesity-world-map, fig.height=7}
+plot_obesity_world_map(bmi_clean, year_filter = latest_year, sex_filter = "Men")
+```
+
+**Comparison:** Compare this map with the diabetes map above. Notice the similar geographical patterns in many regions.
+
+---
+
+# Overall Conclusions
+
+This analysis employed two CRISP-DM cycles to investigate NCD-RisC data:
+
+**Cycle 1** revealed increasing diabetes trends across high-income countries with sex differences favoring higher rates in men.
+
+**Cycle 2** demonstrated a strong positive correlation (r = `r round(cor_results$correlation, 2)`) between obesity and diabetes prevalence at the country level.
+
+**Global Patterns:**
+
+- Diabetes and obesity prevalence are increasing globally
+- Significant geographical variation exists in both conditions
+- Treatment coverage varies dramatically between countries
+- Men show higher diabetes rates than women in most countries
+
+**Recommendations for Further Research:**
+
+- Investigate regional differences within countries
+- Examine the role of healthcare access and treatment
+- Analyze time-lagged relationships between obesity and diabetes
+- Include additional risk factors (physical activity, diet quality)
+
+**Technical Approach:**
+
+This analysis followed best practices including:
+
+- Use of ProjectTemplate for reproducible research structure
+- Data preprocessing in munge scripts
+- Reusable analysis functions with interactive visualizations
+- Version control with Git/GitHub
+- Literate programming with R Markdown
+
+---
+
+# Appendix: Technical Details
+
+## Data Sources
+
+Data obtained from the NCD Risk Factor Collaboration (NCD-RisC):
+
+- Diabetes prevalence estimates (18+ years)
+- BMI/obesity prevalence estimates  
+- Available at: http://ncdrisc.org/
+
+## Statistical Methods
+
+- **Correlation analysis:** Pearson correlation coefficient
+- **Visualization:** ggplot2 and plotly for interactivity
+- **Data manipulation:** dplyr package
+- **Interactive maps:** plotly choropleth maps
+- All analysis conducted in R version `r R.version.string`
