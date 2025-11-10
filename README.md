@@ -22,4 +22,4 @@ To run this analysis, we will need R and RStudio, along with the following R pac
 * `knitr`: For knitting the R Markdown document.
 
 ```r
-install.packages(c("ProjectTemplate", "dplyr", "ggplot2", "plotly", "rprojroot", "knitr"))
+install.packages(c("ProjectTemplate", "dplyr", "ggplot2", "plotly", "rprojroot", "knitr", "tinytex"))
