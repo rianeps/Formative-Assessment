@@ -1,6 +1,6 @@
 ---
 title: "NCD-RisC Data Analysis: Diabetes and Obesity Trends"
-author: "Nepoliyan Ria, Hamsini Arakere Manjunath, Sancha Baretto"
+author: "Nepoliyan Ria, Hamsini Arakere Manjunath, Sancha Baretto, Raj Bal"
 date: "`r Sys.Date()`"
 output: 
   html_document:
@@ -28,7 +28,7 @@ load.project(force.load = TRUE)
 source("src/analysis_functions.R")
 ```
 
-# Executive Summary
+# Introduction
 
 This report investigates trends in diabetes and obesity prevalence using NCD-RisC data, following two cycles of the CRISP-DM methodology. The first cycle explores temporal trends in selected countries, while the second cycle examines the relationship between obesity and diabetes prevalence. All visualizations are interactive - hover over data points for details!
 
@@ -107,12 +107,6 @@ knitr::kable(cycle1_summary,
 - Men generally have higher diabetes rates than women
 - The rate of increase varies by country
 
-**Limitations:**
-
-- Analysis limited to four countries
-- Different years have different data availability
-- Does not account for demographic changes
-
 ---
 
 # CRISP-DM Cycle 2: Obesity-Diabetes Relationship
@@ -185,19 +179,6 @@ Both diabetes and obesity show increasing trends, with obesity rates rising more
 - Both conditions are increasing over time in most countries
 - The relationship supports the hypothesis that obesity is associated with diabetes risk
 
-**Implications:**
-
-- Public health interventions targeting obesity may help reduce diabetes burden
-- Countries with rising obesity rates should prepare for increased diabetes prevalence
-- Prevention strategies should address both conditions simultaneously
-
-**Limitations:**
-
-- Ecological analysis (country-level) cannot establish individual-level causation
-- Other factors (diet, physical activity, healthcare access) not accounted for
-- Time lag between obesity and diabetes development not considered
-- Data availability varies by country and year
-
 ---
 
 # Interactive Global Visualizations
@@ -251,23 +232,6 @@ This analysis employed two CRISP-DM cycles to investigate NCD-RisC data:
 - Treatment coverage varies dramatically between countries
 - Men show higher diabetes rates than women in most countries
 
-**Recommendations for Further Research:**
-
-- Investigate regional differences within countries
-- Examine the role of healthcare access and treatment
-- Analyze time-lagged relationships between obesity and diabetes
-- Include additional risk factors (physical activity, diet quality)
-
-**Technical Approach:**
-
-This analysis followed best practices including:
-
-- Use of ProjectTemplate for reproducible research structure
-- Data preprocessing in munge scripts
-- Reusable analysis functions with interactive visualizations
-- Version control with Git/GitHub
-- Literate programming with R Markdown
-
 ---
 
 # Appendix: Technical Details
@@ -285,5 +249,4 @@ Data obtained from the NCD Risk Factor Collaboration (NCD-RisC):
 - **Correlation analysis:** Pearson correlation coefficient
 - **Visualization:** ggplot2 and plotly for interactivity
 - **Data manipulation:** dplyr package
-- **Interactive maps:** plotly choropleth maps
 - All analysis conducted in R version `r R.version.string`

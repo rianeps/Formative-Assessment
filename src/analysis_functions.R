@@ -1,13 +1,10 @@
-
 library(dplyr)
-library(ggplot2)
+library()
 library(plotly)
 
 # diabetes trends plot
 
-
 plot_diabetes_trends <- function(data, countries, sex_filter = "Men") {
-
   
   plot_data <- data %>%
     filter(country %in% countries, sex == sex_filter)
@@ -28,15 +25,14 @@ plot_diabetes_trends <- function(data, countries, sex_filter = "Men") {
       legend.position = "bottom"
     )
   
-  return(ggplotly(p))
+  return(p)  # Return ggplot object
 }
 
 
 # obesity trends plot
 
-
 plot_obesity_trends <- function(data, countries, sex_filter = "Men") {
-
+  
   plot_data <- data %>%
     filter(country %in% countries, sex == sex_filter)
   
@@ -56,12 +52,11 @@ plot_obesity_trends <- function(data, countries, sex_filter = "Men") {
       legend.position = "bottom"
     )
   
-  return(ggplotly(p))
+  return(p)  # Return ggplot object
 }
 
 
 # obesity-diabetes correlation 
-
 
 plot_obesity_diabetes_correlation <- function(data, year_filter = NULL, sex_filter = "Men") {
   
@@ -95,12 +90,11 @@ plot_obesity_diabetes_correlation <- function(data, year_filter = NULL, sex_filt
       plot.subtitle = element_text(size = 11)
     )
   
-  return(p) 
+  return(p)  # Return ggplot object
 }
 
 
-# gender differences plot
-
+# gender differences plot 
 
 plot_sex_differences <- function(data, country_name) {
   
@@ -122,12 +116,11 @@ plot_sex_differences <- function(data, country_name) {
       legend.position = "bottom"
     )
   
-  return(ggplotly(p))
+  return(p)  
 }
 
 
-# top countries bar chart
-
+# top countries bar chart 
 
 plot_top_countries <- function(data, year_filter, n = 10, variable = "diabetes", sex_filter = "Men") {
   
@@ -165,9 +158,8 @@ plot_top_countries <- function(data, year_filter, n = 10, variable = "diabetes",
 
 # world map - Diabetes
 
-
 plot_diabetes_world_map <- function(data, year_filter, sex_filter = "Men") {
- 
+  
   map_data <- data %>%
     filter(year == year_filter, sex == sex_filter) %>%
     select(country, iso, diabetes_prev, treated_prop) %>%
@@ -209,11 +201,10 @@ plot_diabetes_world_map <- function(data, year_filter, sex_filter = "Men") {
 }
 
 
-# map - Treatment Rates
-
+# map - Treatment Rates 
 
 plot_treatment_world_map <- function(data, year_filter, sex_filter = "Men") {
-
+  
   map_data <- data %>%
     filter(year == year_filter, sex == sex_filter) %>%
     filter(!is.na(treated_prop)) %>%
@@ -254,11 +245,10 @@ plot_treatment_world_map <- function(data, year_filter, sex_filter = "Men") {
 }
 
 
-# map - Obesity
-
+# map - Obesity 
 
 plot_obesity_world_map <- function(data, year_filter, sex_filter = "Men") {
-
+  
   map_data <- data %>%
     filter(year == year_filter, sex == sex_filter) %>%
     select(country, iso, obesity_prev) %>%
@@ -296,10 +286,10 @@ plot_obesity_world_map <- function(data, year_filter, sex_filter = "Men") {
   return(fig)
 }
 
-# treatment vs prevalence scat
+# treatment vs prevalence scatter 
 
 plot_treatment_vs_prevalence <- function(data, year_filter, sex_filter = "Men") {
-
+  
   plot_data <- data %>%
     filter(year == year_filter, sex == sex_filter) %>%
     filter(!is.na(treated_prop), !is.na(diabetes_prev))
@@ -338,9 +328,8 @@ plot_treatment_vs_prevalence <- function(data, year_filter, sex_filter = "Men") 
 
 # correlation
 
-
 calculate_correlation <- function(data, year_filter = NULL, sex_filter = "Men") {
- 
+  
   analysis_data <- data %>%
     filter(sex == sex_filter)
   
@@ -363,9 +352,8 @@ calculate_correlation <- function(data, year_filter = NULL, sex_filter = "Men") 
 
 # Summary country stats
 
-
 summarize_country <- function(data, country_name, sex_filter = "Men") {
- 
+  
   summary_stats <- data %>%
     filter(country == country_name, sex == sex_filter) %>%
     summarise(
