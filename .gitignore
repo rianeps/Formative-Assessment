@@ -3,4 +3,18 @@
 .Rhistory
 .RData
 .Ruserdata
+
+# ProjectTemplate cache
 cache/
+
+# Mac OS system files
+.DS_Store
+
+# Generated reports (HTML outputs)
+*.html
+
+# Logs directory (can be generated)
+logs/
+
+# R session data
+.RDataTmp
