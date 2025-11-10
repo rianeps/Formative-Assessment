@@ -1,6 +1,6 @@
 ---
 title: "NCD-RisC Data Analysis: Diabetes and Obesity Trends"
-author: "Nepoliyan Ria, Hamsini Arakere Manjunath, Sancha Baretto, Raj Bal"
+author: "Nepoliyan Ria, Hamsini Arakere Manjunath, Sancha Baretto, Rajbala Mohan Jadhav"
 date: "`r Sys.Date()`"
 output: 
   html_document:
@@ -79,7 +79,7 @@ countries_of_interest <- c("United Kingdom", "United States of America",
 plot_diabetes_trends(diabetes_clean, countries_of_interest)
 ```
 
-**Key Observations:** Hover over the lines to see exact values. The graph shows increasing trends in diabetes prevalence across all four countries, with the United States showing the highest prevalence rates.
+**Observations:** The graph shows increasing trends in diabetes prevalence across all four countries, with the United States showing the highest prevalence rates and Japan remaining relatively low.
 
 ### Sex Differences in Diabetes
 
@@ -87,7 +87,7 @@ plot_diabetes_trends(diabetes_clean, countries_of_interest)
 plot_sex_differences(diabetes_clean, "United Kingdom")
 ```
 
-In the United Kingdom, men consistently show higher diabetes prevalence than women throughout the time period. Click on legend items to show/hide specific sexes.
+In the United Kingdom, men consistently show higher diabetes prevalence than women throughout the time period. 
 
 ## Evaluation
 
@@ -100,10 +100,10 @@ knitr::kable(cycle1_summary,
              caption = "Summary statistics for selected countries (Men)")
 ```
 
-**Key Findings:**
+**Observations:**
 
 - All four countries show increasing diabetes prevalence over time
-- The United States has the highest diabetes prevalence among countries analyzed
+- The United States has the highest diabetes prevalence among countries analyzed.
 - Men generally have higher diabetes rates than women
 - The rate of increase varies by country
 
@@ -189,7 +189,6 @@ Both diabetes and obesity show increasing trends, with obesity rates rising more
 plot_diabetes_world_map(diabetes_clean, year_filter = latest_year, sex_filter = "Men")
 ```
 
-**Instructions:** Hover over countries to see exact prevalence rates. Zoom in/out and drag to explore different regions.
 
 ## Global Treatment Rates Map
 
@@ -197,7 +196,7 @@ plot_diabetes_world_map(diabetes_clean, year_filter = latest_year, sex_filter = 
 plot_treatment_world_map(diabetes_clean, year_filter = latest_year, sex_filter = "Men")
 ```
 
-**Key Observations:** Treatment rates vary significantly between countries. Some countries with high diabetes prevalence have low treatment rates, indicating a treatment gap.
+**Key Observations:** Treatment rates vary significantly between countries. Some countries with high diabetes prevalence have low treatment rates, indicating a treatment gap. For instance, many countries in Africa and in Asia such Kenya have diabetes prevalence but low treatment rates
 
 ## Treatment vs Prevalence Scatter Plot
 
@@ -213,7 +212,7 @@ plot_treatment_vs_prevalence(diabetes_clean, year_filter = latest_year, sex_filt
 plot_obesity_world_map(bmi_clean, year_filter = latest_year, sex_filter = "Men")
 ```
 
-**Comparison:** Compare this map with the diabetes map above. Notice the similar geographical patterns in many regions.
+**Comparison:** If we compare this map with the diabetes map above we can notice the similar geographical patterns in many regions.
 
 ---
 
@@ -247,6 +246,6 @@ Data obtained from the NCD Risk Factor Collaboration (NCD-RisC):
 ## Statistical Methods
 
 - **Correlation analysis:** Pearson correlation coefficient
-- **Visualization:** ggplot2 and plotly for interactivity
+- **Visualization:** ggplot2 and plotly for maps
 - **Data manipulation:** dplyr package
 - All analysis conducted in R version `r R.version.string`
