@@ -1,7 +1,7 @@
 # Formative Report: NCD-RisC Data Analysis
 
-**Author:** Nepoliyan Ria, Hamsini Manjunath, Sancha Baretto '/n'
-**Module:** Graduate Foundations of Statistics and Data Science '/n'
+**Author:** Nepoliyan Ria, Hamsini Manjunath, Sancha Baretto <br>
+**Module:** Graduate Foundations of Statistics and Data Science <br>
 **Submission Date:** 10 November 2025
 
 ## Project Overview
