@@ -3,14 +3,4 @@
 .Rhistory
 .RData
 .Ruserdata
-
-#Project folders to ignore
-config/
-diagnostics/
-lib/
-logs/
-profiling/
-graphs/
-docs/
-tests/
-TODO/
+cache/
