@@ -2,3 +2,12 @@
 .Rhistory
 .RData
 .Ruserdata
+./config/
+./diagnostics/
+./lib/
+./logs/
+./profiling/
+./graphs/
+./docs/
+./tests/
+./TODO/
