@@ -11,7 +11,6 @@ This project investigates global trends in diabetes and obesity prevalence using
 ---
 
 ## Required R Packages
-blablabla
 
 To run this analysis, we will need R and RStudio, along with the following R packages.
 
