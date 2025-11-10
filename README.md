@@ -6,7 +6,7 @@
 
 ## Project Overview
 
-This project investigates global trends in diabetes and obesity prevalence using data from the NCD-RisC. The analysis follows two cycles of the CRISP-DM framework and uses the `ProjectTemplate` structure for reproducibility. The final report is an R Markdown document featuring interactive `plotly` visualizations.
+This project investigates global trends in diabetes and obesity prevalence using data from the NCD-RisC. The analysis follows two cycles of the CRISP-DM framework and uses the `ProjectTemplate` structure for reproducibility. The final report is an R Markdown document featuring `ggplot2` and `plotly` visualizations.
 
 ---
 
