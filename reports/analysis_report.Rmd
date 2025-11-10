@@ -1,6 +1,6 @@
 ---
 title: "NCD-RisC Data Analysis: Diabetes and Obesity Trends"
-author: "Nepoliyan Ria, Hamsini Manjunath, Sancha Baretto"
+author: "Nepoliyan Ria, Hamsini Arakere Manjunath, Sancha Baretto"
 date: "`r Sys.Date()`"
 output: 
   html_document:
@@ -11,24 +11,20 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-# Load required libraries first
+
 library(ProjectTemplate)
 library(dplyr)
 library(ggplot2)
 library(plotly)
 
-# Set chunk options
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, 
                       fig.width = 10, fig.height = 6)
 
-# Find and set the project root directory
 project_root <- rprojroot::find_rstudio_root_file()
 setwd(project_root)
 
-# Now load the project
 load.project(force.load = TRUE)
 
-# Source analysis functions
 source("src/analysis_functions.R")
 ```
 

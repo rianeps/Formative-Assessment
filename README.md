@@ -12,7 +12,7 @@ This project investigates global trends in diabetes and obesity prevalence using
 
 ## Required R Packages
 
-To run this analysis, you will need R and RStudio, along with the following R packages.
+To run this analysis, we will need R and RStudio, along with the following R packages.
 
 * `ProjectTemplate`: For structuring the project and loading data.
 * `dplyr`: For all data manipulation.
@@ -20,8 +20,6 @@ To run this analysis, you will need R and RStudio, along with the following R pa
 * `plotly`: For creating all interactive visualizations and maps.
 * `rprojroot`: Used by `knitr` in the Rmd file to find the project's root directory.
 * `knitr`: For knitting the R Markdown document.
-
-You can install all required packages by running the following command in your R console:
 
 ```r
 install.packages(c("ProjectTemplate", "dplyr", "ggplot2", "plotly", "rprojroot", "knitr"))

@@ -3,13 +3,11 @@ library(dplyr)
 library(ggplot2)
 library(plotly)
 
-
-# Interactive diabetes trends plot
+# diabetes trends plot
 
 
 plot_diabetes_trends <- function(data, countries, sex_filter = "Men") {
-  # Plot diabetes prevalence trends over time for selected countries
-  # Returns: Interactive plotly object
+
   
   plot_data <- data %>%
     filter(country %in% countries, sex == sex_filter)
@@ -30,18 +28,15 @@ plot_diabetes_trends <- function(data, countries, sex_filter = "Men") {
       legend.position = "bottom"
     )
   
-  # Convert to interactive plotly
   return(ggplotly(p))
 }
 
 
-# Interactive obesity trends plot
+# obesity trends plot
 
 
 plot_obesity_trends <- function(data, countries, sex_filter = "Men") {
-  # Plot obesity prevalence trends over time for selected countries
-  # Returns: Interactive plotly object
-  
+
   plot_data <- data %>%
     filter(country %in% countries, sex == sex_filter)
   
@@ -61,17 +56,14 @@ plot_obesity_trends <- function(data, countries, sex_filter = "Men") {
       legend.position = "bottom"
     )
   
-  # Convert to interactive plotly
   return(ggplotly(p))
 }
 
 
-# GGPLOT2 obesity-diabetes correlation (PURE GGPLOT)
+# obesity-diabetes correlation 
 
 
 plot_obesity_diabetes_correlation <- function(data, year_filter = NULL, sex_filter = "Men") {
-  # Scatter plot showing relationship between obesity and diabetes
-  # Returns: ggplot2 object (NOT converted to plotly)
   
   plot_data <- data %>%
     filter(sex == sex_filter)
@@ -83,7 +75,6 @@ plot_obesity_diabetes_correlation <- function(data, year_filter = NULL, sex_filt
   plot_data <- plot_data %>%
     filter(!is.na(obesity_prev), !is.na(diabetes_prev))
   
-  # Calculate correlation for subtitle
   cor_value <- cor(plot_data$obesity_prev, plot_data$diabetes_prev)
   
   p <- ggplot(plot_data, aes(x = obesity_prev, y = diabetes_prev)) +
@@ -104,16 +95,14 @@ plot_obesity_diabetes_correlation <- function(data, year_filter = NULL, sex_filt
       plot.subtitle = element_text(size = 11)
     )
   
-  return(p)  # Return ggplot object directly
+  return(p) 
 }
 
 
-# Interactive sex differences plot
+# gender differences plot
 
 
 plot_sex_differences <- function(data, country_name) {
-  # Compare diabetes prevalence between men and women
-  # Returns: Interactive plotly object
   
   plot_data <- data %>%
     filter(country == country_name, sex %in% c("Men", "Women"))
@@ -137,12 +126,10 @@ plot_sex_differences <- function(data, country_name) {
 }
 
 
-# GGPLOT2 top countries bar chart (PURE GGPLOT)
+# top countries bar chart
 
 
 plot_top_countries <- function(data, year_filter, n = 10, variable = "diabetes", sex_filter = "Men") {
-  # Bar plot of top N countries by prevalence
-  # Returns: ggplot2 object (NOT converted to plotly)
   
   var_col <- ifelse(variable == "diabetes", "diabetes_prev", "obesity_prev")
   var_label <- ifelse(variable == "diabetes", "Diabetes", "Obesity")
@@ -172,17 +159,15 @@ plot_top_countries <- function(data, year_filter, n = 10, variable = "diabetes",
     ) +
     scale_y_continuous(expand = expansion(mult = c(0, 0.15)))
   
-  return(p)  # Return ggplot object directly
+  return(p)  
 }
 
 
-# Interactive world map - Diabetes
+# world map - Diabetes
 
 
 plot_diabetes_world_map <- function(data, year_filter, sex_filter = "Men") {
-  # Create interactive choropleth map showing diabetes prevalence
-  # Returns: plotly map object
-  
+ 
   map_data <- data %>%
     filter(year == year_filter, sex == sex_filter) %>%
     select(country, iso, diabetes_prev, treated_prop) %>%
@@ -224,13 +209,11 @@ plot_diabetes_world_map <- function(data, year_filter, sex_filter = "Men") {
 }
 
 
-# Interactive world map - Treatment Rates
+# map - Treatment Rates
 
 
 plot_treatment_world_map <- function(data, year_filter, sex_filter = "Men") {
-  # Create interactive choropleth map showing treatment rates
-  # Returns: plotly map object
-  
+
   map_data <- data %>%
     filter(year == year_filter, sex == sex_filter) %>%
     filter(!is.na(treated_prop)) %>%
@@ -271,13 +254,11 @@ plot_treatment_world_map <- function(data, year_filter, sex_filter = "Men") {
 }
 
 
-# Interactive world map - Obesity
+# map - Obesity
 
 
 plot_obesity_world_map <- function(data, year_filter, sex_filter = "Men") {
-  # Create interactive choropleth map showing obesity prevalence
-  # Returns: plotly map object
-  
+
   map_data <- data %>%
     filter(year == year_filter, sex == sex_filter) %>%
     select(country, iso, obesity_prev) %>%
@@ -315,12 +296,10 @@ plot_obesity_world_map <- function(data, year_filter, sex_filter = "Men") {
   return(fig)
 }
 
-# Interactive treatment vs prevalence scatter
+# treatment vs prevalence scat
 
 plot_treatment_vs_prevalence <- function(data, year_filter, sex_filter = "Men") {
-  # Interactive scatter plot of treatment rate vs diabetes prevalence
-  # Returns: plotly object
-  
+
   plot_data <- data %>%
     filter(year == year_filter, sex == sex_filter) %>%
     filter(!is.na(treated_prop), !is.na(diabetes_prev))
@@ -357,13 +336,11 @@ plot_treatment_vs_prevalence <- function(data, year_filter, sex_filter = "Men") 
 }
 
 
-# Calculate correlation
+# correlation
 
 
 calculate_correlation <- function(data, year_filter = NULL, sex_filter = "Men") {
-  # Calculate correlation between obesity and diabetes
-  # Returns: list with correlation statistics
-  
+ 
   analysis_data <- data %>%
     filter(sex == sex_filter)
   
@@ -384,13 +361,11 @@ calculate_correlation <- function(data, year_filter = NULL, sex_filter = "Men") 
 }
 
 
-# Summarize country statistics
+# Summary country stats
 
 
 summarize_country <- function(data, country_name, sex_filter = "Men") {
-  # Get summary statistics for a specific country
-  # Returns: data frame with summary stats
-  
+ 
   summary_stats <- data %>%
     filter(country == country_name, sex == sex_filter) %>%
     summarise(
