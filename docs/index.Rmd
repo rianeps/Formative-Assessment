@@ -1,6 +1,6 @@
 ---
 title: "NCD-RisC Data Analysis: Diabetes and Obesity Trends"
-author: "Nepoliyan Ria, Hamsini Arakere Manjunath, Sancha Baretto, Rajbala Mohan Jadhav"
+author: "Nepoliyan Ria"
 date: "`r Sys.Date()`"
 output: 
   html_document:
